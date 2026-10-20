@@ -1,5 +1,14 @@
+import os
+
 import pygame
-notas=[(2.0, 0, 0), (3.0, 2, 0), (4.0, 4, 1.0)]#ejemplo para ir trabajando mientras agus hace su parte
+
+import canciones
+import config as cfg
+from formato_chart import leer_chart
+
+import pygame
+
+notas = leer_chart(canciones.ruta_chart("Zara Larsson - Midnight Sun (Official Music Video).mp3"))["notas"]
 teclas= {pygame.K_a: 0, pygame.K_s:1, pygame.K_d:2, pygame.K_f:3, pygame.K_g:4}
 tiempo_caida= 1.5
 inicio = pygame.time.get_ticks()
