@@ -8,16 +8,19 @@ from formato_chart import leer_chart
 
 import pygame
 
-notas = leer_chart(canciones.ruta_chart("Zara Larsson - Midnight Sun (Official Music Video).mp3"))["notas"]
+
+nombre_cancion= "Zara Larsson - Midnight Sun (Official Music Video).mp3"
+notas = leer_chart(canciones.ruta_chart(nombre_cancion))["notas"]
 teclas= {pygame.K_a: 0, pygame.K_s:1, pygame.K_d:2, pygame.K_f:3, pygame.K_g:4}
 tiempo_caida= 1.5
-inicio = pygame.time.get_ticks()
+
 pygame.init() #inicia todas las cosas de pygame 
 pantalla = pygame.display.set_mode((1000,700))
 reloj = pygame.time.Clock()
 analizadas=[]
-
-
+pygame.mixer.music.load("canciones/" + nombre_cancion)
+pygame.mixer.music.play()
+inicio= pygame.time.get_ticks()
 
 #------------------------------------------------------------------------------------------------------
 colores = [(0, 200, 0), (220, 50, 50), (240, 200, 0), (50, 130, 230), (240, 130, 0)]  # verde, rojo, amarillo, azul, naranja
