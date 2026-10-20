@@ -76,7 +76,66 @@ class Pantalla:
 # ---------------------------------------------------------------------------
 # Menú: añadir canciones y lista de la biblioteca
 # ---------------------------------------------------------------------------
+
+
+
 class PantallaMenu(Pantalla):
+    def __init__ (self, app):
+        super().__init__(app)
+        self.botones= []
+        texto_botones=["Jugar", "Cargar canciones", "Settings"]
+        for i in range(len(texto_botones)):
+            rect = pygame.Rect(0, 0, 300, 60)
+            rect.center = (cfg.ANCHO // 2, 220 + i * 90)
+            self.botones.append((texto_botones[i], rect))
+        self.mensaje = ""
+
+    def _clic(self, texto):
+        if texto == "Cargar canciones":
+            self.app.cambiar(self.app.cargar)
+        else:
+            self.mensaje = f"{texto}: todavía no está hecho"    
+
+    def evento(self, evento):
+        if (evento.type == pygame.KEYDOWN) and (evento.key == pygame.K_ESCAPE):
+            self.app.salir()
+        elif (evento.type == pygame.MOUSEBUTTONDOWN) and (evento.button == 1):
+            for texto, rect in self.botones:
+                if rect.collidepoint(evento.pos):
+                    self._clic(texto)
+
+    def dibujar(self, s):
+            app = self.app
+            s.fill(cfg.COLOR_FONDO)
+
+            pos_mouse = pygame.mouse.get_pos()
+            for texto, rect in self.botones:
+                color = cfg.COLOR_BOTON_HOVER if rect.collidepoint(pos_mouse) else cfg.COLOR_BOTON
+                pygame.draw.rect(s, color, rect, border_radius=12)
+                txt = self.app.fuente.render(texto, True, cfg.COLOR_TEXTO)
+                s.blit(txt, txt.get_rect(center=rect.center))
+
+            if self.mensaje:
+                txt = self.app.fuente_chica.render(self.mensaje, True, cfg.COLOR_TEXTO_SUAVE)
+                s.blit(txt, txt.get_rect(center=(cfg.ANCHO // 2, 520)))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class PantallaCargarCanciones(Pantalla):
     ALTO_FILA = 30
 
     def __init__(self, app):
@@ -142,7 +201,7 @@ class PantallaMenu(Pantalla):
     # --- Pantalla ---
     def evento(self, e):
         if e.type == pygame.KEYDOWN and e.key == pygame.K_ESCAPE:
-            self.app.salir()
+            self.app.cambiar(self.app.menu) 
         elif e.type == pygame.MOUSEBUTTONDOWN and e.button == 1:
             if self.boton.collidepoint(e.pos):
                 rutas, error = elegir_archivos()
@@ -247,7 +306,7 @@ class PantallaProgreso(Pantalla):
         """Vuelve al menú con un mensaje con el resultado."""
         ok = self.est["ok"]
         errores = self.errores_previos + self.est["errores"]
-        menu = self.app.menu
+        menu = self.app.cargar
         menu.recargar(al_final=True)
 
         if errores:
@@ -313,7 +372,7 @@ class PantallaEditor(Pantalla):
 
     def evento(self, e):
         if self.editor.evento(e):  # True = el usuario quiere volver
-            self.app.cambiar(self.app.menu)
+            self.app.cambiar(self.app.cargar)
 
     def dibujar(self, s):
         self.editor.dibujar(s)

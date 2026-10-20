@@ -3,7 +3,7 @@
 import pygame
 
 import config as cfg
-from pantallas import PantallaMenu
+from pantallas import PantallaMenu, PantallaCargarCanciones
 
 
 class App:
@@ -22,6 +22,7 @@ class App:
         self.corriendo = True
         self.actual = None
         self.menu = PantallaMenu(self)  # el menú se crea una vez y se reutiliza
+        self.cargar= PantallaCargarCanciones(self)
         self.cambiar(self.menu)
 
     def cambiar(self, pantalla):
@@ -55,6 +56,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-
