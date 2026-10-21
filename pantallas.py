@@ -120,21 +120,6 @@ class PantallaMenu(Pantalla):
                 s.blit(txt, txt.get_rect(center=(cfg.ANCHO // 2, 520)))
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 class PantallaCargarCanciones(Pantalla):
     ALTO_FILA = 30
 
