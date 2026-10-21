@@ -3,7 +3,7 @@
 import pygame
 
 import config as cfg
-from pantallas import PantallaMenu, PantallaCargarCanciones
+from pantallas import PantallaMenu, PantallaCargarCanciones, PantallaElegirCancion
 
 
 class App:
@@ -24,7 +24,9 @@ class App:
         self.menu = PantallaMenu(self)  # el menú se crea una vez y se reutiliza
         self.cargar= PantallaCargarCanciones(self)
         self.cambiar(self.menu)
+        self.elegir = PantallaElegirCancion(self)
 
+        
     def cambiar(self, pantalla):
         if self.actual is not None:
             self.actual.al_salir()

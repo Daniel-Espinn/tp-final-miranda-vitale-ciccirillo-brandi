@@ -69,8 +69,11 @@ class PantallaMenu(Pantalla):
     def _clic(self, texto):
         if texto == "Cargar canciones":
             self.app.cambiar(self.app.cargar)
+        elif texto == "Jugar":
+            self.app.cambiar(self.app.elegir)
         else:
-            self.mensaje = f"{texto}: todavía no está hecho"    
+            self.mensaje = f"{texto}: todavía no está hecho"
+ 
 
     def evento(self, evento):
         if (evento.type == pygame.KEYDOWN) and (evento.key == pygame.K_ESCAPE):
@@ -363,3 +366,89 @@ class PantallaEditor(Pantalla):
 
     def dibujar(self, s):
         self.editor.dibujar(s)
+
+
+
+
+
+
+
+
+
+
+
+
+# ---------------------------------------------------------------------------
+# Elegir canción: lista de canciones para jugar
+# ---------------------------------------------------------------------------
+class PantallaElegirCancion(Pantalla):
+    ALTO_FILA = 30
+
+    def __init__(self, app):
+        super().__init__(app)
+        self.panel = pygame.Rect(60, 120, cfg.ANCHO - 120, 420)
+        self.filas_visibles = (self.panel.height - 20) // self.ALTO_FILA
+        self.lista = []
+        self.scroll = 0
+        self.mensaje = ""
+        self.color_mensaje = cfg.COLOR_TEXTO
+
+    def al_entrar(self):
+        self.lista = canciones.escanear_canciones()  # relee las canciones cada vez que entrás
+        self.scroll = 0
+        self.mensaje = ""
+
+    def evento(self, e):
+        if e.type == pygame.KEYDOWN and e.key == pygame.K_ESCAPE:
+            self.app.cambiar(self.app.menu)
+        elif e.type == pygame.MOUSEBUTTONDOWN and e.button == 1:
+            if self.panel.collidepoint(e.pos) and e.pos[1] >= self.panel.y + 12:
+                i = (e.pos[1] - (self.panel.y + 12)) // self.ALTO_FILA
+                if i < self.filas_visibles and self.scroll + i < len(self.lista):
+                    ruta = self.lista[self.scroll + i]
+                    if canciones.tiene_chart(ruta):
+                        self.mensaje = f"Elegiste: {ruta}"  # en el paso 2 acá arranca el juego
+                        self.color_mensaje = cfg.COLOR_OK
+                    else:
+                        self.mensaje = "Esa canción todavía no tiene chart."
+                        self.color_mensaje = cfg.COLOR_ERROR
+        elif e.type == pygame.MOUSEWHEEL:
+            maximo = max(0, len(self.lista) - self.filas_visibles)
+            self.scroll = max(0, min(self.scroll - e.y, maximo))
+
+    def dibujar(self, s):
+        app = self.app
+        s.fill(cfg.COLOR_FONDO)
+
+        titulo = app.fuente_titulo.render("Elegí una canción", True, cfg.COLOR_TEXTO)
+        s.blit(titulo, titulo.get_rect(center=(cfg.ANCHO // 2, 50)))
+
+        if self.mensaje:
+            texto = recortar(self.mensaje, app.fuente_chica, cfg.ANCHO - 80)
+            txt = app.fuente_chica.render(texto, True, self.color_mensaje)
+            s.blit(txt, txt.get_rect(center=(cfg.ANCHO // 2, 95)))
+
+        pygame.draw.rect(s, cfg.COLOR_PANEL, self.panel, border_radius=10)
+        if not self.lista:
+            vacio = app.fuente_chica.render("Todavía no hay canciones.", True, cfg.COLOR_TEXTO_SUAVE)
+            s.blit(vacio, vacio.get_rect(center=self.panel.center))
+            return
+
+        pos_mouse = pygame.mouse.get_pos()
+        visibles = self.lista[self.scroll:self.scroll + self.filas_visibles]
+        for i, ruta in enumerate(visibles):
+            y = self.panel.y + 12 + i * self.ALTO_FILA
+            fila = pygame.Rect(self.panel.x + 6, y - 3, self.panel.width - 12, self.ALTO_FILA - 2)
+            if fila.collidepoint(pos_mouse):
+                pygame.draw.rect(s, cfg.COLOR_FILA_HOVER, fila, border_radius=6)
+
+            listo = canciones.tiene_chart(ruta)
+            etiqueta = app.fuente_chica.render(
+                "chart listo" if listo else "sin chart",
+                True, cfg.COLOR_OK if listo else cfg.COLOR_TEXTO_SUAVE,
+            )
+            s.blit(etiqueta, (self.panel.right - 15 - etiqueta.get_width(), y))
+
+            ancho_nombre = self.panel.width - 30 - etiqueta.get_width() - 15
+            nombre = recortar(ruta.replace(os.sep, "/"), app.fuente_chica, ancho_nombre)
+            s.blit(app.fuente_chica.render(nombre, True, cfg.COLOR_TEXTO), (self.panel.x + 15, y))
