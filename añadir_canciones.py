@@ -7,6 +7,7 @@ import pygame
 
 from editor_texto import EditorTexto
 from formato_chart import resultado_a_texto, validar_texto
+from explorador import Explorador
 
 # ---------------------------------------------------------------------------
 # Configuración
@@ -229,6 +230,8 @@ def main():
     guardar_lista(canciones)
 
     modo = "menu"  # "menu", "procesando" o "editor"
+    explorador = None
+    ultima_carpeta = None
     editor = None
     mensaje, color_mensaje = "", COLOR_TEXTO
     errores_copia = []
@@ -299,6 +302,13 @@ def main():
                     pygame.key.set_repeat()
                     editor = None
                     modo = "menu"
+            elif modo == "explorador":
+                rutas = explorador.evento(evento)
+                if rutas is not None:  # terminó (aceptó o canceló)
+                    ultima_carpeta = explorador.carpeta
+                    explorador = None
+                    modo = "menu" 
+                    procesar(rutas)   
             elif evento.type == pygame.KEYDOWN and evento.key == pygame.K_ESCAPE:
                 corriendo = False
             elif modo != "menu":
