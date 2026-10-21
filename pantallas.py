@@ -3,7 +3,7 @@
 import os
 
 import pygame
-
+from juego import jugar
 import canciones
 import config as cfg
 from editor_texto import EditorTexto
@@ -570,8 +570,8 @@ class PantallaElegirCancion(Pantalla):
                 if i < self.filas_visibles and self.scroll + i < len(self.lista):
                     ruta = self.lista[self.scroll + i]
                     if canciones.tiene_chart(ruta):
-                        self.mensaje = f"Elegiste: {ruta}"  # en el paso 2 acá arranca el juego
-                        self.color_mensaje = cfg.COLOR_OK
+                        if not jugar(self.app.ventana, ruta):
+                            self.app.salir()  
                     else:
                         self.mensaje = "Esa canción todavía no tiene chart."
                         self.color_mensaje = cfg.COLOR_ERROR

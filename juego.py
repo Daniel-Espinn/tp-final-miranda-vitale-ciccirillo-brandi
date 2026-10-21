@@ -14,8 +14,6 @@ def jugar(pantalla, nombre_cancion):
     teclas= {pygame.K_a: 0, pygame.K_s:1, pygame.K_d:2, pygame.K_f:3, pygame.K_g:4}
     tiempo_caida= 1.5
 
-    pygame.init() #inicia todas las cosas de pygame 
-    pantalla = pygame.display.set_mode((1000,700))
     reloj = pygame.time.Clock()
     analizadas=[]
     pygame.mixer.music.load("canciones/" + nombre_cancion)
@@ -92,4 +90,3 @@ def jugar(pantalla, nombre_cancion):
         pygame.display.flip()
         reloj.tick(60)
 
-    pygame.quit()

@@ -1,7 +1,6 @@
 """Punto de entrada: python main.py"""
 
 import pygame
-
 import config as cfg
 from pantallas import PantallaMenu, PantallaCargarCanciones, PantallaElegirCancion
 
@@ -26,7 +25,7 @@ class App:
         self.cambiar(self.menu)
         self.elegir = PantallaElegirCancion(self)
 
-        
+
     def cambiar(self, pantalla):
         if self.actual is not None:
             self.actual.al_salir()
