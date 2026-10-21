@@ -1,3 +1,6 @@
 autochart/
 canciones/
+charts/
 venv/
+__pycache__/
+*.wav

@@ -53,8 +53,6 @@ class Pantalla:
 # Menú: añadir canciones y lista de la biblioteca
 # ---------------------------------------------------------------------------
 
-
-
 class PantallaMenu(Pantalla):
     def __init__ (self, app):
         super().__init__(app)
@@ -366,16 +364,6 @@ class PantallaEditor(Pantalla):
 
     def dibujar(self, s):
         self.editor.dibujar(s)
-
-
-
-
-
-
-
-
-
-
 
 
 # ---------------------------------------------------------------------------
