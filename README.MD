@@ -12,14 +12,15 @@
 El juego es un "rhythm game" inspirado en guitar hero. Nos movimos a una estética pixel art y añadimos un modo historia muy simple.
 
 ### Resumen del desarrollo
+
+#### Estructura de archivos
 Lo que hago es comenzar con las carpetas
 canciones y charts
 En canciones almacenamos las canciones del usuario en sus respectivas carpetas.
 En charts se almacenan los archivos de texto que fueron generados por Autochart
 
-Como elegimos una estética pixel art. Al escalar imágenes, usamos pygame.transform.scale() en lugar de smoothscale() para que los bordes queden definidos y cuadrados.
 
-´´´
+```
 .
 ├── añadir_canciones.py
 ├── autochart
@@ -44,7 +45,11 @@ Como elegimos una estética pixel art. Al escalar imágenes, usamos pygame.trans
 ├── main.py
 ├── pantallas.py
 ├── prueba_ventana.py
-´´´
+```
+
+#### Diseño
+
+Como elegimos una estética pixel art. Al escalar imágenes, usamos pygame.transform.scale() en lugar de smoothscale() para que los bordes queden definidos y cuadrados.
 
 ### Detalles técnicos
 Para comenzar el menu fue creado en su totalidad con pygame.
