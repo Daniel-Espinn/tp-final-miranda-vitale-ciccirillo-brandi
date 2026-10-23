@@ -11,10 +11,6 @@ from explorador import Explorador
 
 import config as cfg
 
-
-# ---------------------------------------------------------------------------
-# Lógica de canciones (sin pygame, se puede reutilizar desde otras pantallas)
-# ---------------------------------------------------------------------------
 def escanear_canciones():
     """Devuelve las rutas (relativas a canciones/) de todos los audios, ordenadas."""
     encontradas = []
@@ -88,9 +84,7 @@ def quitar_cancion(nombre):
     guardar_lista(escanear_canciones())
 
 
-# ---------------------------------------------------------------------------
 # Generación de charts en un hilo aparte (para no congelar la ventana)
-# ---------------------------------------------------------------------------
 estado = {
     "fraccion": 0.0,
     "texto": "",

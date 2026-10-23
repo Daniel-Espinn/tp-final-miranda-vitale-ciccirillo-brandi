@@ -9,14 +9,6 @@ from canciones import guardar_chart, quitar_cancion
 
 
 class Generador:
-    """
-    Procesa una lista de canciones (nombres de archivo dentro de canciones/).
-
-        gen = Generador(["tema.wav"])
-        gen.iniciar()
-        gen.estado()   # dict con fraccion, texto, nombre, indice, total, ok, errores, terminado
-    """
-
     def __init__(self, nombres):
         self.nombres = list(nombres)
         self._lock = threading.Lock()
