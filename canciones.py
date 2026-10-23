@@ -1,5 +1,3 @@
-"""Biblioteca de canciones: lectura de canciones/, lista en charts/ y charts en texto."""
-
 import os
 import shutil
 

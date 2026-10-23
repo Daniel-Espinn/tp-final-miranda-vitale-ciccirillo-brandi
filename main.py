@@ -4,8 +4,6 @@ from pantallas import PantallaMenu, PantallaCargarCanciones, PantallaElegirCanci
 
 
 class App:
-    """Ventana, fuentes y loop principal. Cada pantalla se cambia con cambiar()."""
-
     def __init__(self):
         pygame.init()
         self.ventana = pygame.display.set_mode((cfg.ANCHO, cfg.ALTO), pygame.RESIZABLE)
