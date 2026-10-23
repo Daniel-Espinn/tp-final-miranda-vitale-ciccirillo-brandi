@@ -1,37 +1,8 @@
-"""
-Formato de texto de los charts: charts/<archivo de audio>.txt
-
-    # cancion: believer.wav
-    # beats: 0.512 0.981 1.450 1.919 2.388 2.857
-    0.512 1
-    0.512 2
-    0.981 0
-    1.450 2 0.750
-    2.388 4
-
-Las dos primeras líneas son encabezados. Después va una nota por línea:
-
-    tiempo(segundos)  carril  [duración(segundos)]
-
-La duración es opcional (solo para notas sostenidas). Las líneas vacías se
-ignoran, y cualquier otra línea que empiece con # es un comentario.
-
-Para leer un chart desde el juego:
-
-    from formato_chart import leer_chart
-    chart = leer_chart("charts/believer.wav.txt")
-    chart["cancion"]   # "believer.wav"
-    chart["beats"]     # [0.512, 0.981, ...]
-    chart["notas"]     # [(0.512, 1, 0.0), (0.512, 2, 0.0), (1.45, 2, 0.75), ...]
-"""
-
 import dataclasses
 
 # Qué dificultad de autochart se guarda en el archivo (resultado.notas[DIFICULTAD])
 DIFICULTAD = "experto"
 
-# Nombres que se prueban para leer cada campo de una nota de autochart.
-# Si tu clase Nota usa otros nombres, agregalos acá.
 _CAMPOS_TIEMPO = ("tiempo", "t", "time", "inicio", "start", "segundo", "segundos")
 _CAMPOS_CARRIL = ("trastes", "traste", "carril", "lane", "fret", "frets", "columna", "col", "boton")
 _CAMPOS_DURACION = ("duracion", "duration", "sustain", "largo", "dur", "longitud")
@@ -44,10 +15,6 @@ class ErrorChart(ValueError):
         super().__init__(mensaje)
         self.linea = linea
 
-
-# ---------------------------------------------------------------------------
-# resultado de autochart -> texto
-# ---------------------------------------------------------------------------
 def _campo(nota, candidatos):
     for nombre in candidatos:
         if isinstance(nota, dict):
@@ -128,9 +95,6 @@ def resultado_a_texto(resultado, nombre_cancion):
     return "\n".join(lineas) + "\n"
 
 
-# ---------------------------------------------------------------------------
-# texto -> datos (para el juego y para validar lo que se edita)
-# ---------------------------------------------------------------------------
 def parsear_chart(texto):
     """
     Lee el texto de un chart. Devuelve {"cancion", "beats", "notas"}.

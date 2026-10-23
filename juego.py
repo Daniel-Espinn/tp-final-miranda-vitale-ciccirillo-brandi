@@ -27,9 +27,6 @@ def jugar(pantalla, nombre_cancion):
     y_linea = pantalla.get_height() - 150                  # altura de la línea de golpe    
     #------------------------------------------------------------------------------
 
-
-
-
     corriendo = True
     while corriendo:
         segundos = (pygame.time.get_ticks() - inicio) / 1000

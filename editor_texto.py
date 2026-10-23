@@ -13,25 +13,6 @@ COLOR_ERROR = (255, 100, 100)
 
 
 class EditorTexto:
-    """
-    Editor de texto simple para pygame.
-
-    `validador` (opcional) es una función validador(texto) que devuelve None si el
-    texto está bien, o (numero_de_linea, mensaje) si no. Ctrl+S no guarda mientras
-    el validador marque un error.
-
-    Uso desde el loop principal:
-        editor = EditorTexto(ruta, "Titulo", ANCHO, ALTO)
-        ...
-        if editor.evento(evento):   # True = el usuario quiere volver
-            editor = None
-        ...
-        editor.dibujar(pantalla)
-
-    Teclas: flechas, Inicio/Fin, Re Pág/Av Pág, Ctrl+Inicio/Fin, Enter, Tab,
-    Backspace, Supr, Ctrl+S (guardar) y Esc (volver). Rueda del mouse y clic.
-    """
-
     def __init__(self, ruta, titulo, ancho, alto, validador=None):
         self.ruta = ruta
         self.titulo = titulo
@@ -74,9 +55,6 @@ class EditorTexto:
         )
         self.visibles = max(1, self.area.height // self.alto_linea)
 
-    # ------------------------------------------------------------------
-    # Utilidades
-    # ------------------------------------------------------------------
     def _msg(self, texto, color):
         self.mensaje = texto
         self.color_mensaje = color
@@ -122,9 +100,6 @@ class EditorTexto:
             return bajo - 1
         return bajo
 
-    # ------------------------------------------------------------------
-    # Edición
-    # ------------------------------------------------------------------
     def _insertar(self, texto):
         texto = "".join(c for c in texto if c.isprintable())
         if not texto:
@@ -176,9 +151,6 @@ class EditorTexto:
         self.mensaje = ""
         self._ver_cursor()
 
-    # ------------------------------------------------------------------
-    # Guardado
-    # ------------------------------------------------------------------
     def guardar(self):
         """Guarda solo si el validador (si hay uno) da el visto bueno."""
         texto = "\n".join(self.lineas)
@@ -204,11 +176,7 @@ class EditorTexto:
         self.descarte_pendiente = False
         self._msg("Guardado.", COLOR_OK)
 
-    # ------------------------------------------------------------------
-    # Eventos
-    # ------------------------------------------------------------------
     def evento(self, e):
-        """Procesa un evento de pygame. Devuelve True si hay que volver al menú."""
         if e.type == pygame.TEXTINPUT:
             self._insertar(e.text)
         elif e.type == pygame.KEYDOWN:
@@ -295,11 +263,8 @@ class EditorTexto:
         self._ver_cursor()
         return False
 
-    # ------------------------------------------------------------------
-    # Dibujo
-    # ------------------------------------------------------------------
     def _dibujar_linea(self, pantalla, linea, y):
-        """Dibuja solo la parte visible de la línea (hay líneas larguísimas, como la de beats)."""
+        """Dibuja solo la parte visible de la línea"""
         if not linea:
             return
         x = self.area_texto.x + 8 - self.scroll_x

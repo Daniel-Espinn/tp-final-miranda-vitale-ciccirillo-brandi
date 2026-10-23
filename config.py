@@ -1,19 +1,14 @@
-"""Constantes compartidas por todo el proyecto."""
-
 import os
 
-# Carpetas y archivos
 CARPETA_CANCIONES = "canciones"
 CARPETA_CHARTS = "charts"
 ARCHIVO_LISTA = os.path.join(CARPETA_CHARTS, "canciones.txt")
 EXTENSIONES = {".wav", ".mp3", ".ogg", ".flac"}
 
-# Ventana
 TITULO = "Charts"
-ANCHO, ALTO = 800, 600
+ANCHO, ALTO = 1280, 720
 FPS = 60
 
-# Colores
 COLOR_FONDO = (20, 20, 40)
 COLOR_TEXTO = (255, 255, 255)
 COLOR_TEXTO_SUAVE = (170, 170, 200)

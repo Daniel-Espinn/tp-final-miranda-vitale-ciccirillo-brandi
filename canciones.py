@@ -8,7 +8,7 @@ from formato_chart import resultado_a_texto, validar_texto
 
 
 def escanear_canciones():
-    """Devuelve las rutas (relativas a canciones/) de todos los audios, ordenadas."""
+    """Devuelve las rutas de todos los audios, ordenadas."""
     encontradas = []
     for carpeta, _, archivos in os.walk(cfg.CARPETA_CANCIONES):
         for archivo in archivos:

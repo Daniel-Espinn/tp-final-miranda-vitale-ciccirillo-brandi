@@ -1,5 +1,3 @@
-"""Punto de entrada: python main.py"""
-
 import pygame
 import config as cfg
 from pantallas import PantallaMenu, PantallaCargarCanciones, PantallaElegirCancion
@@ -10,7 +8,7 @@ class App:
 
     def __init__(self):
         pygame.init()
-        self.ventana = pygame.display.set_mode((cfg.ANCHO, cfg.ALTO))
+        self.ventana = pygame.display.set_mode((cfg.ANCHO, cfg.ALTO), pygame.RESIZABLE)
         pygame.display.set_caption(cfg.TITULO)
         self.reloj = pygame.time.Clock()
 
@@ -40,6 +38,14 @@ class App:
             for evento in pygame.event.get():
                 if evento.type == pygame.QUIT:
                     self.salir()
+                elif evento.type == pygame.VIDEORESIZE:
+                    if self.actual:
+                        self.actual.recalcular_layout(evento.w, evento.h)
+                elif evento.type == pygame.KEYDOWN and evento.key == pygame.K_F11:
+                    pygame.display.toggle_fullscreen()
+                    if self.actual:
+                        ancho, alto = self.ventana.get_size()
+                        self.actual.recalcular_layout(ancho, alto)
                 else:
                     self.actual.evento(evento)
 
