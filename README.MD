@@ -9,7 +9,7 @@
 - Pedro Brandi 
 
 <p align="center">
-  <img src="./assets/ui/banner.png" alt="Guitar Mafia Banner" width="100%">
+  <img src="./assets/ui/banner.jpeg" alt="Guitar Mafia Banner" width="100%">
 </p>
 
 ### Resumen del juego
