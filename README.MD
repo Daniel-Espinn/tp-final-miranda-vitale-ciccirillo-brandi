@@ -8,6 +8,10 @@
 - Lorenzo Ciccirillo Kuz
 - Pedro Brandi 
 
+<p align="center">
+  <img src="./assets/ui/banner.png" alt="Guitar Mafia Banner" width="100%">
+</p>
+
 ### Resumen del juego
 El juego es un "rhythm game" inspirado en guitar hero. Nos movimos a una estética pixel art y añadimos un modo historia muy simple.
 
